@@ -8,7 +8,7 @@
             text-color="#fff"
             active-text-color="#ffd04b"
             class="w-full">
-            <el-menu-item class="!mr-auto" index="1">Diva</el-menu-item>
+            <el-menu-item class="!mr-auto" index="1">Dep State</el-menu-item>
             <el-sub-menu index="2">
                 <template #title>
                     <Icon name="line-md:account" class="text-white !inline w-5 h-5" />

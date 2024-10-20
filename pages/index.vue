@@ -52,4 +52,7 @@ async function login_f() {
   }
   loading.value=false
 }
+definePageMeta({
+  layout: 'empty'
+});
 </script>
