@@ -29,8 +29,8 @@ export const useUserStore = defineStore('user', {
             Authorization: `Bearer ${this.token}`
           },
         });
-        if (response.token) {
-          this.token = response.token;
+        if (response.access_token) {
+          this.token = response.access_token;
         }
       } catch (error) {
         console.error('Error al renovar el token:', error);
@@ -41,7 +41,7 @@ export const useUserStore = defineStore('user', {
       this.stopTokenRefresh();
       this.refreshIntervalId = setInterval(() => {
         this.refresh();
-      }, 3600 * 1000);
+      }, 3500 * 1000);
     },
     stopTokenRefresh() {
       if (this.refreshIntervalId) {

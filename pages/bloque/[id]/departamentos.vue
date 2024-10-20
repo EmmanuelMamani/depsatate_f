@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h3 class="text-center text-slate-700 mb-3 text-xl">BLOQUE </h3>
+        <h3 class="text-center text-slate-700 mb-3 text-xl">BLOQUE {{ bloque.bloque }} </h3>
         
         <el-input 
           v-model="buscar" 
@@ -8,7 +8,7 @@
           placeholder="Buscar departamento" 
           @input="filterDepartamentos"
         />
-
+        <el-empty description="Cargando Departamentos..." v-if="departamentos.length<=0" />
         <el-table :data="filteredDepartamentos" height="600" v-if="departamentos.length>0">
             <el-table-column prop="departamento" label="Departamento"  />
             <el-table-column prop="mt2" label="MT2"  />
@@ -29,6 +29,7 @@
   const route = useRoute()
   const buscar = ref('')
   const departamentos = ref([])
+  const bloque = ref('')
   const filteredDepartamentos = ref([]);
 
   async function departamentosList() {
@@ -39,8 +40,9 @@
         },
       });
 
-      departamentos.value = response;
-      filteredDepartamentos.value=response
+      departamentos.value = response.departamentos
+      filteredDepartamentos.value=response.departamentos
+      bloque.value=response.bloque
     } catch (err) {
       console.error('Error inesperado:', err); 
     }
