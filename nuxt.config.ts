@@ -9,4 +9,9 @@ export default defineNuxtConfig({
     '@nuxt/icon',
     'pinia-plugin-persistedstate/nuxt'
   ],
+  runtimeConfig: {
+    public: {
+      apiBase: 'http://localhost:8000/api',
+    },
+  },
 })

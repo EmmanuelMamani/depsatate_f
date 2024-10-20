@@ -13,14 +13,14 @@
     </div>
 </template>
 <script setup>
-
+const config = useRuntimeConfig();
 const email = ref('')
 const password = ref('')
 const loading= ref(false)
 async function login_f() {
   loading.value=true
   try {
-    const token = await $fetch('http://localhost:8000/api/auth/login', {
+    const token = await $fetch(`${config.public.apiBase}/auth/login`, {
       method: 'POST',
       body: {
         email: email.value,
@@ -28,7 +28,7 @@ async function login_f() {
       },
     });
     if (token) {
-      const user = await $fetch('http://localhost:8000/api/auth/me', {
+      const user = await $fetch(`${config.public.apiBase}/auth/me`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token.access_token}`, // Añadir el token Bearer en los headers
