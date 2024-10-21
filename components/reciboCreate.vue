@@ -5,6 +5,7 @@
         v-model="open"
         :title="`Crear recibo para departamento ${props.departamento.departamento}`"
         :append-to-body="true"
+        @close="clear"
       >
         <div class="space-y-3">
           <div class="flex space-x-2 items-center">
@@ -98,6 +99,18 @@
     } else {
       error_detalle.value='Complete todos los campos para agregar un detalle'
     }
+  }
+
+  function clear(){
+    recibo.value = ''
+    nombre.value = ''
+    detalles.value = []
+    new_detalle.value = 'Expensas de'
+    metodo_pago.value = 'ninguno'
+    new_monto.value = props.departamento.expensa 
+    error_recibo.value=''
+    error_detalle.value=''
+    error_total.value=''
   }
 
   async function registrar_recibo(){
