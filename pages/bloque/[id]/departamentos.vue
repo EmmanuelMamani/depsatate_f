@@ -9,7 +9,7 @@
           @input="filterDepartamentos"
         />
         <el-empty description="Cargando Departamentos..." v-if="departamentos.length<=0" />
-        <el-table :data="filteredDepartamentos" height="600" v-if="departamentos.length>0">
+        <el-table :data="filteredDepartamentos" height="550" v-if="departamentos.length>0">
             <el-table-column prop="departamento" label="Departamento"  />
             <el-table-column prop="mt2" label="MT2"  />
             <el-table-column prop="expensa" label="Expensas" />
@@ -19,10 +19,17 @@
                     <el-tag  :type="scope.row.estado=='libre'?'success':'danger'" effect="dark">{{ scope.row.estado }}</el-tag>
                 </template>
             </el-table-column>
+            <el-table-column label="Crear recibo" >
+                <template #default="scope">
+                  <ReciboCreate :departamento="scope.row"></ReciboCreate>
+                </template>
+            </el-table-column>
         </el-table>
     </div>
 </template>
 <script setup>
+import ReciboCreate from '~/components/ReciboCreate.vue';
+
 
   const userStore = useUserStore();
   const config = useRuntimeConfig();

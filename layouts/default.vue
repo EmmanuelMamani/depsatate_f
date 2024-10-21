@@ -12,7 +12,10 @@
 
   </template>
 <script setup>
-
+  const userStore = useUserStore();
+  onMounted(() => {
+    userStore.startTokenRefresh();
+  });
 </script>
 
   

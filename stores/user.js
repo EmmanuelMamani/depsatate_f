@@ -31,6 +31,7 @@ export const useUserStore = defineStore('user', {
         });
         if (response.access_token) {
           this.token = response.access_token;
+          console.log('Token refresh');
         }
       } catch (error) {
         console.error('Error al renovar el token:', error);
@@ -40,15 +41,17 @@ export const useUserStore = defineStore('user', {
     startTokenRefresh() {
       this.stopTokenRefresh();
       this.refreshIntervalId = setInterval(() => {
-        this.refresh();
-      }, 3500 * 1000);
+        this.refresh(); 
+      }, 1 * 60 * 1000); 
+
     },
+    
     stopTokenRefresh() {
       if (this.refreshIntervalId) {
         clearInterval(this.refreshIntervalId);
         this.refreshIntervalId = null;
       }
-    }
+    },
   },
   persist: {
     enabled: true,
