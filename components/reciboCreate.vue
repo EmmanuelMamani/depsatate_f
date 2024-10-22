@@ -45,7 +45,7 @@
               <el-option label="Tarjeta" value="tarjeta" />
             </el-select>
             <label>Total:</label>
-            <el-input :model-value="totalComputed" style="width: 100px" disabled />
+            <el-input :model-value="totalComputed" style="width: 100px" :readonly="true" />
           </div>
           <el-alert :title="error_total" v-if="error_total!=''" type="error" :closable="false" />
           

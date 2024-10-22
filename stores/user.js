@@ -42,7 +42,7 @@ export const useUserStore = defineStore('user', {
       this.stopTokenRefresh();
       this.refreshIntervalId = setInterval(() => {
         this.refresh(); 
-      }, 1 * 60 * 1000); 
+      }, 5 * 60 * 1000); 
 
     },
     

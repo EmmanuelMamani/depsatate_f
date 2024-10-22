@@ -9,7 +9,7 @@
           @input="filterDepartamentos"
         />
         <el-empty description="Cargando Departamentos..." v-if="departamentos.length<=0" />
-        <el-table :data="filteredDepartamentos" height="550" v-if="departamentos.length>0">
+        <el-table :data="filteredDepartamentos" height="550" v-if="departamentos.length>0" table-layout="auto">
             <el-table-column prop="departamento" label="Departamento"  />
             <el-table-column prop="mt2" label="MT2"  />
             <el-table-column prop="expensa" label="Expensas" />
@@ -19,9 +19,12 @@
                     <el-tag  :type="scope.row.estado=='libre'?'success':'danger'" effect="dark">{{ scope.row.estado }}</el-tag>
                 </template>
             </el-table-column>
-            <el-table-column label="Crear recibo" >
+            <el-table-column label="Recibos" >
                 <template #default="scope">
-                  <ReciboCreate :departamento="scope.row"></ReciboCreate>
+                  <div class="flex space-x-2">
+                    <ReciboCreate :departamento="scope.row"></ReciboCreate>
+                    <RecibosDepartamento :departamento="scope.row"></RecibosDepartamento>
+                  </div>
                 </template>
             </el-table-column>
         </el-table>
