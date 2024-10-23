@@ -23,7 +23,7 @@
                 </el-table-column>
                 <el-table-column label="Detalle" >
                     <template #default="scope">
-                        <ReciboDetalle :recibo="scope.row" ></ReciboDetalle>
+                        <ReciboDetalle :recibo="scope.row" @pagado="actualizarMetodo(scope.row, $event)" ></ReciboDetalle>
                     </template>
                 </el-table-column>
             </el-table>
@@ -55,4 +55,7 @@
         console.error('Error inesperado:', err); 
         }
     }
+    const actualizarMetodo = (recibo, nuevoMetodo) => {
+        recibo.metodo_pago = nuevoMetodo; 
+        };
 </script>
