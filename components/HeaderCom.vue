@@ -20,8 +20,9 @@
 </template>
 <script setup>
 const userStore = useUserStore();
+const config = useRuntimeConfig();
 async function logout(){
-    const user = await $fetch('http://localhost:8000/api/auth/logout', {
+    const user = await $fetch(`${config.public.apiBase}/auth/logout`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${userStore.token}`,
