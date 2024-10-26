@@ -13,8 +13,5 @@ export default defineNuxtConfig({
     public: {
       apiBase: 'http://localhost:8000/api',
     },
-  },
-  app: {
-    baseURL: '/depstate/',
   }
 })
