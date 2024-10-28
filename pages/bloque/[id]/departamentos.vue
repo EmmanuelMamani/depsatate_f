@@ -22,8 +22,8 @@
             <el-table-column label="Recibos" >
                 <template #default="scope">
                   <div class="flex space-x-2">
-                    <ReciboCreate :departamento="scope.row"></ReciboCreate>
-                    <RecibosDepartamento :departamento="scope.row"></RecibosDepartamento>
+                    <ReciboCreate :departamento="scope.row" :key="scope.row"></ReciboCreate>
+                    <RecibosDepartamento :departamento="scope.row" :key="scope.row"></RecibosDepartamento>
                   </div>
                 </template>
             </el-table-column>
