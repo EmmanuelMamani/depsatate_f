@@ -6,7 +6,7 @@
         title="Detalle del recibo"
         :append-to-body="true"
         >
-            <Recibo :recibo="props.recibo" :detalles="detalles" :editable="true" @pagado="pagado"></Recibo>
+            <Recibo :recibo="props.recibo" :detalles="detalles"></Recibo>
         </el-dialog>
     </div>
 </template>
@@ -20,9 +20,7 @@
     const userStore = useUserStore();
     const config = useRuntimeConfig();
     const detalles = ref([])
-    const open=ref(false)
-    const emit = defineEmits(['pagado']);    
-
+    const open=ref(false) 
     async function detallesList() {
         open.value=true
         try {
@@ -37,8 +35,4 @@
         console.error('Error inesperado:', err); 
         }
     }
-    const pagado = (metodo) => {
-        open.value=false
-        emit('pagado',metodo)
-    };
 </script>

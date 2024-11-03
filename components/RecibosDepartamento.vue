@@ -3,7 +3,7 @@
         <el-button type="warning" @click="recibosList">Recibos</el-button>
         <el-dialog
         v-model="open"
-        :title="`Recibos del departamento ${props.departamento.departamento}`"
+        :title="`Recibos del departamento ${props.departamento.departamento}  Saldo pendiente: ${saldo_pendiente} BS`"
         :append-to-body="true"
         >
             <el-empty description="Sin recibos" v-if="recibos.length<=0" />
@@ -16,14 +16,20 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="total" label="Total"  />
-                <el-table-column label="Metodo de pago" >
+                <el-table-column prop="saldo" label="Saldo"  />
+                <el-table-column label="Pagado" >
                     <template #default="scope">
-                        <el-tag  :type="scope.row.metodo_pago!='ninguno'?'success':'danger'" effect="dark">{{ scope.row.metodo_pago }}</el-tag>
+                        <el-tag  :type="scope.row.pagado==true?'success':'danger'" effect="dark">{{ scope.row.pagado?'Si':'No' }}</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column label="Detalle" >
                     <template #default="scope">
-                        <ReciboDetalle :recibo="scope.row" @pagado="actualizarMetodo(scope.row, $event)" ></ReciboDetalle>
+                        <ReciboDetalle :recibo="scope.row"></ReciboDetalle>
+                    </template>
+                </el-table-column>
+                <el-table-column label="Pagar" >
+                    <template #default="scope">
+                        <ReciboPagar :recibo="scope.row" @pagado="actualizarSaldo(scope.row, $event)" ></ReciboPagar>
                     </template>
                 </el-table-column>
             </el-table>
@@ -41,6 +47,7 @@
     const config = useRuntimeConfig();
     const recibos = ref([])
     const open=ref(false)
+    const saldo_pendiente=ref(0)
     async function recibosList() {
         open.value=true
         try {
@@ -51,11 +58,16 @@
         });
 
         recibos.value = response.recibos
+        saldo_pendiente.value= response.saldo
         } catch (err) {
         console.error('Error inesperado:', err); 
         }
     }
-    const actualizarMetodo = (recibo, nuevoMetodo) => {
-        recibo.metodo_pago = nuevoMetodo; 
+    const actualizarSaldo = (recibo, monto) => {
+        recibo.saldo  -= monto ;
+        saldo_pendiente.value -= monto
+            if(recibo.saldo==0){
+                recibo.pagado=true
+            } 
         };
 </script>
