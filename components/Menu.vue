@@ -16,6 +16,9 @@
           <nuxt-link :to="`/bloque/${bloque.id}/departamentos`">Bloque {{ bloque.bloque }}</nuxt-link>
         </el-menu-item>
       </el-sub-menu>
+      <el-menu-item index="3">
+        <nuxt-link to="/recibo">Recibos Totales</nuxt-link>
+      </el-menu-item>
     </el-menu>
   </div>
 </template>

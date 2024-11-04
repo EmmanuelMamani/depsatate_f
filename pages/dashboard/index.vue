@@ -7,7 +7,7 @@
             <el-button type="primary" @click="detalles_fecha">Aceptar</el-button>
         </div>
         <div class="grid grid-cols-3 gap-3">
-            <CardDetalle v-for="(detalle,index) in detalles" :key=index :detalle="detalle.detalle" :monto="detalle.monto" :icon="detalle.icono"  ></CardDetalle>
+            <CardDetalle v-for="(detalle,index) in detalles" :key=index :detalle="detalle.detalle" :monto="Number(detalle.monto)" :icon="detalle.icono"  ></CardDetalle>
         </div>
     </div>
 </template>

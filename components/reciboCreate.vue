@@ -13,7 +13,7 @@
           
           <div class="flex space-x-2 items-center">
             <label>N° Recibo:</label>
-            <el-input v-model="recibo" style="width: 100px" placeholder="Recibo" />
+            <el-input v-model.number="recibo" style="width: 100px" type="number" placeholder="Recibo" />
             <label>Nombre:</label>
             <el-input v-model="nombre" style="width: 200px" placeholder="Nombre del recibo" />
             <label>Gestion:</label>
