@@ -8,16 +8,19 @@
       text-color="#fff"
     >
       <el-menu-item index="1">
-        <nuxt-link to="/dashboard">Dashboard</nuxt-link>
+        <nuxt-link to="/dashboard" class="block w-full h-full">Dashboard</nuxt-link>
       </el-menu-item>
       <el-sub-menu index="2">
         <template #title>Bloques</template>
         <el-menu-item v-for="(bloque, index) in bloques" :key="index" :index="`2-${index + 1}`">
-          <nuxt-link :to="`/bloque/${bloque.id}/departamentos`">Bloque {{ bloque.bloque }}</nuxt-link>
+          <nuxt-link :to="`/bloque/${bloque.id}/departamentos`" class="block w-full h-full">Bloque {{ bloque.bloque }}</nuxt-link>
         </el-menu-item>
       </el-sub-menu>
       <el-menu-item index="3">
-        <nuxt-link to="/recibo">Recibos Totales</nuxt-link>
+        <nuxt-link to="/recibo" class="block w-full h-full">Recibos Totales</nuxt-link>
+      </el-menu-item>
+      <el-menu-item index="4">
+        <nuxt-link to="/recibo/bloques" class="block w-full h-full">Recibos por bloques</nuxt-link>
       </el-menu-item>
     </el-menu>
   </div>
