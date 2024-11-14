@@ -72,11 +72,13 @@
                 Authorization: `Bearer ${userStore.token}`, // Añadir el token Bearer en los headers
                 },
                 body: {
-                    fecha:`${fecha_reporte.getFullYear()}-${fecha_reporte.getMonth()+1}`,
+                    fecha:`${fecha_reporte.getFullYear()}-${(fecha_reporte.getMonth() + 1).toString().padStart(2, '0')}`,
                     bloque:bloque.value
                 },
             });
             if (response) {
+                console.log(`${fecha_reporte.getFullYear()}-${(fecha_reporte.getMonth() + 1).toString().padStart(2, '0')}`);
+                
                 departamentos.value=response
             }
         } catch (error) {   

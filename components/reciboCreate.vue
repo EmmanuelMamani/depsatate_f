@@ -16,15 +16,26 @@
             <el-input v-model.number="recibo" style="width: 100px" type="number" placeholder="Recibo" />
             <label>Nombre:</label>
             <el-input v-model="nombre" style="width: 200px" placeholder="Nombre del recibo" />
-            <label>Gestion:</label>
-            <el-input v-model.number="gestion" style="width: 100px" type="number"  placeholder="Gestion" />
+            <label>Fecha:</label>
+            <el-date-picker v-model="fecha_recibo" type="date" placeholder="Fecha del recibo"  />
+          </div>
+          <div class="flex space-x-2 items-center mt-2">
+            <label>Correspondiente al mes:</label>
+            <el-date-picker v-model="mes_correspondiente" type="month" placeholder="Elije un mes" />
           </div>
           <el-alert :title="error_recibo" v-if="error_recibo!=''" type="error" :closable="false" />
           
           <h3 class="text-lg text-slate-700 border-b border-slate-700">Detalle del recibo:</h3>
           <div class="flex space-x-2 items-center">
             <label>Nuevo detalle:</label>
-            <el-input v-model="new_detalle" style="width: 200px" placeholder="Detalle" />
+            <el-select v-model="new_detalle" placeholder="Elije un tipo de detalle" size="large" style="width: 150px">
+              <el-option label="Expensa" value="expensa" />
+              <el-option label="Agua" value="agua" />
+              <el-option label="Alquiler de local" value="alquiler de local" />
+              <el-option label="Alquiler de piscina" value="alquiler de piscina" />
+              <el-option label="Multa" value="multa" />
+              <el-option label="Otros" value="otros" />
+            </el-select>
             <label>Monto:</label>
             <el-input v-model.number="new_monto" style="width: 100px" type="number" step="0.01" placeholder="Monto" />
             <el-button type="primary" @click="agregarDetalle">Agregar</el-button>
@@ -78,10 +89,11 @@
   const nombre = ref('')
   const detalles = ref([])
   const nota = ref ('')
-  const gestion = ref ('')
-  const new_detalle = ref('Expensas de')
+  const fecha_recibo = ref ('')
+  const new_detalle = ref('Expensa')
   const new_monto = ref(0)
   const metodo_pago = ref('ninguno')
+  const mes_correspondiente=ref('')
   new_monto.value = props.departamento.expensa || 0
   nombre.value = props.departamento.propietario || ''
 
@@ -130,8 +142,10 @@
     //validar campos
     if(recibo.value==''){error_recibo.value='Complete el N° de recibo'; return; }else{error_recibo.value=''}
     if(nombre.value==''){error_recibo.value='Complete el Nombre en el recibo';return;}else{error_recibo.value=''}
-    if(gestion.value==''){error_recibo.value='Complete la gestion del recibo';return;}else{error_recibo.value=''}
+    if(fecha_recibo.value==''){error_recibo.value='Complete la Fecha del recibo';return;}else{error_recibo.value=''}
+    if(mes_correspondiente.value==''){error_recibo.value='Complete el Mes correspondiente';return;}else{error_recibo.value=''}
     if(totalComputed.value==0){error_total.value='El total no puede ser 0';return;}else{error_total.value=''}
+    const fecha=new Date(mes_correspondiente.value)
 
     try {
       const response = await $fetch(`${config.public.apiBase}/recibo`, {
@@ -148,7 +162,8 @@
           nombre:nombre.value,
           detalles:detalles.value,
           nota:nota.value,
-          gestion:gestion.value
+          fecha_recibo:fecha_recibo.value,
+          mes_correspondiente:`${fecha.getFullYear()}-${fecha.getMonth()+1}`
         },
       });
       if (response) {

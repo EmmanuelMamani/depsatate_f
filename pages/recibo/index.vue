@@ -31,7 +31,7 @@
               Authorization: `Bearer ${userStore.token}`, 
             },
             body: {
-                    fecha:`${fecha_reporte.getFullYear()}-${fecha_reporte.getMonth()+1}`
+                    fecha:`${fecha_reporte.getFullYear()}-${(fecha_reporte.getMonth() + 1).toString().padStart(2, '0')}`
             },
           });
 
