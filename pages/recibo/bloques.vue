@@ -10,7 +10,7 @@
             <el-button type="primary" @click="reporte_mes">Aceptar</el-button>
         </div>
         <el-alert :title="error_reporte" v-if="error_reporte!=''" type="error" :closable="false" />
-        <el-table :data="departamentos" height="550" v-if="departamentos.length>0" table-layout="auto">
+        <el-table :data="departamentos" height="300" v-if="departamentos.length>0" table-layout="auto">
             <el-table-column prop="departamento" label="Departamento"  />
             <el-table-column label="Estado" prop="estado" filterable :filters="estadoFilters" :filter-method="filterEstado" column-key="estado"  >
                 <template #default="{ row }">
@@ -18,9 +18,14 @@
                 </template>
             </el-table-column>
             <el-table-column prop="recibo" label="Recibo"  />
+            <el-table-column prop="fecha_recibo" label="Fecha"  />
+            <el-table-column prop="mes_correspondiente" label="Mes correspondiente"  />
             <el-table-column prop="total" label="Total"  />
             <el-table-column prop="saldo" label="Saldo"  />
         </el-table>
+        <div class="grid grid-cols-3 gap-3">
+            <CardDetalle v-for="(detalle,index) in detalles" :key=index :detalle="detalle.detalle" :monto="Number(detalle.monto)" :icon="detalle.icono"  ></CardDetalle>
+        </div>
     </div>
 </template>
 <script setup>
@@ -32,6 +37,8 @@
     const bloque = ref('')
     const error_reporte=ref('')
     const departamentos=ref([])
+    const detalles = ref([])
+
     const estadoFilters =   [
                                 { text: 'Sin Recibo', value: 'sin recibo' },
                                 { text: 'Sin Pagar', value: 'sin pagar' },
@@ -65,8 +72,7 @@
                 Authorization: `Bearer ${userStore.token}`, // Añadir el token Bearer en los headers
                 },
                 body: {
-                    mes:fecha_reporte.getMonth(),
-                    gestion:fecha_reporte.getFullYear(),
+                    fecha:`${fecha_reporte.getFullYear()}-${fecha_reporte.getMonth()+1}`,
                     bloque:bloque.value
                 },
             });
@@ -80,6 +86,21 @@
             type: 'error',
             })
         }
+        try {
+            const response = await $fetch(`${config.public.apiBase}/recibo/reporte_detalles`, {
+                method: 'POST',
+                headers: {
+                Authorization: `Bearer ${userStore.token}`, 
+                },
+                body:{
+                    inicio:new Date(fecha_reporte.getFullYear(), fecha_reporte.getMonth(), 1).toISOString().split('T')[0],
+                    fin: new Date(fecha_reporte.getFullYear(), fecha_reporte.getMonth()+1, 0).toISOString().split('T')[0]
+                }
+            });            
+            detalles.value=response
+            } catch (err) {
+            console.error('Error inesperado:', err); 
+            }
     }
     function getTagType(estado) {
         switch (estado) {
