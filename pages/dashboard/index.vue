@@ -1,13 +1,18 @@
 <template>
-    <div>
-        <h3 class="text-center text-xl text-sky-900">Reporte de recibos</h3>
-        <div class="flex space-x-3 my-3">
-            <label for="">Fecha inicio:</label><el-date-picker v-model="inicio" type="date" placeholder="Dia inicio" />
-            <label for="">Fecha fin:</label><el-date-picker v-model="fin" type="date" placeholder="Dia fin" />
-            <el-button type="primary" @click="detalles_fecha">Aceptar</el-button>
+    <div class="grid grid-cols-2 gap-3">
+        <div>
+          <h3 class="text-center text-xl text-sky-900">Reporte de recibos</h3>
+          <div class="flex space-x-3 my-3">
+              <label for="">Fecha inicio:</label><el-date-picker v-model="inicio" type="date" placeholder="Dia inicio" />
+              <label for="">Fecha fin:</label><el-date-picker v-model="fin" type="date" placeholder="Dia fin" />
+              <el-button type="primary" @click="detalles_fecha">Aceptar</el-button>
+          </div>
+          <div class="grid grid-cols-3 gap-3">
+              <CardDetalle v-for="(detalle,index) in detalles" :key=index :detalle="detalle.detalle" :monto="Number(detalle.monto)" :icon="detalle.icono"  ></CardDetalle>
+          </div>
         </div>
-        <div class="grid grid-cols-3 gap-3">
-            <CardDetalle v-for="(detalle,index) in detalles" :key=index :detalle="detalle.detalle" :monto="Number(detalle.monto)" :icon="detalle.icono"  ></CardDetalle>
+        <div>
+          <ReciboBuscar></ReciboBuscar>
         </div>
     </div>
 </template>

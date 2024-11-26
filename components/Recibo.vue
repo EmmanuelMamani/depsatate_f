@@ -6,6 +6,13 @@
             <el-input v-model="props.recibo.recibo" style="width: 100px" :readonly="true" />
             <label>Nombre:</label>
             <el-input v-model="props.recibo.nombre" style="width: 200px" :readonly="true" />
+            <label>Fecha:</label>
+            <el-input v-model="props.recibo.fecha_recibo" style="width: 150px" :readonly="true" />
+          </div>
+
+          <div class="flex space-x-2 items-center">
+            <label>Mes correspondiente:</label>
+            <el-input v-model="props.recibo.mes_correspondiente" style="width: 100px" :readonly="true" />
           </div>
 
           <h3 class="text-lg text-slate-700 border-b border-slate-700">Detalle del recibo:</h3>
@@ -20,6 +27,8 @@
               <el-input v-model="pagado" style="width: 50px" :readonly="true" />
             <label>Total:</label>
             <el-input v-model="props.recibo.total" style="width: 100px" :readonly="true" />
+            <label>Saldo:</label>
+            <el-input v-model="props.recibo.saldo" style="width: 100px" :readonly="true" />
           </div>
 
           <h3 class="text-lg text-slate-700 border-b border-slate-700">Nota:</h3>
