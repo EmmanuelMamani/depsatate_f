@@ -1,13 +1,13 @@
 <template>
-    <div>
-        <h3 class="text-center text-slate-700 mb-3 text-xl">BLOQUE {{ bloque.bloque }} </h3>
-        
-        <el-input 
-          v-model="buscar" 
-          style="width: 240px" 
-          placeholder="Buscar departamento" 
-          @input="filterDepartamentos"
-        />
+  <div>
+    <h3 class="text-center text-slate-700 mb-3 text-xl">BLOQUE {{ bloque.bloque }} </h3>
+      <div class="grid grid-cols-2 gap-3">
+        <el-input v-model="buscar"  style="width: 240px" placeholder="Buscar departamento" @input="filterDepartamentos"/>
+        <div class="flex justify-end space-x-3">
+          <DepEstadoPDF v-if="bloque" :departamentos="departamentos" :bloque="bloque.bloque" estado="libre" tipo="success" ></DepEstadoPDF>
+          <DepEstadoPDF v-if="bloque" :departamentos="departamentos" :bloque="bloque.bloque" estado="ocupado" tipo="danger" ></DepEstadoPDF>
+        </div>
+      </div>
         <el-empty description="Cargando Departamentos..." v-if="departamentos.length<=0" />
         <el-table :data="filteredDepartamentos" height="550" v-if="departamentos.length>0" table-layout="auto">
             <el-table-column prop="departamento" label="Departamento"  />
@@ -16,7 +16,7 @@
             <el-table-column prop="propietario" label="Propietario"  />
             <el-table-column label="Estado" >
                 <template #default="scope">
-                    <el-tag  :type="scope.row.estado=='libre'?'success':'danger'" effect="dark">{{ scope.row.estado }}</el-tag>
+                    <el-tag  :type="scope.row.estado=='libre'?'success':'danger'" >{{ scope.row.estado }}</el-tag>
                 </template>
             </el-table-column>
             <el-table-column label="Recibos" >

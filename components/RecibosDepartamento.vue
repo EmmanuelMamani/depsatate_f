@@ -19,7 +19,7 @@
                 <el-table-column prop="saldo" label="Saldo"  />
                 <el-table-column label="Pagado" >
                     <template #default="scope">
-                        <el-tag  :type="scope.row.pagado==true?'success':'danger'" effect="dark">{{ scope.row.pagado?'Si':'No' }}</el-tag>
+                        <el-tag  :type="scope.row.pagado==true?'success':'danger'" >{{ scope.row.pagado?'Si':'No' }}</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column label="Detalle" >
