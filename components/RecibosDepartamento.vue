@@ -32,6 +32,11 @@
                         <ReciboPagar :recibo="scope.row" @pagado="actualizarSaldo(scope.row, $event)" ></ReciboPagar>
                     </template>
                 </el-table-column>
+                <el-table-column label="Eliminar" >
+                    <template #default="scope">
+                        <ReciboDelete :recibo="scope.row" @eliminado="eliminado(scope.row, $event)"></ReciboDelete>
+                    </template>
+                </el-table-column>
             </el-table>
         </el-dialog>
     </div>
@@ -69,5 +74,13 @@
             if(recibo.saldo==0){
                 recibo.pagado=true
             } 
-        };
+    };
+    const eliminado= (recibo, monto) => {
+        saldo_pendiente.value -= monto
+        
+        const index = recibos.value.findIndex(r => r.id === recibo.id);
+        if (index !== -1) {
+            recibos.value.splice(index, 1);
+        }
+    };
 </script>

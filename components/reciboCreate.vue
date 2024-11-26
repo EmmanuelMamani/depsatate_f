@@ -130,9 +130,11 @@
     recibo.value = ''
     nombre.value = props.departamento.propietario
     detalles.value = []
-    new_detalle.value = 'Expensas de'
+    new_detalle.value = 'Expensas'
     metodo_pago.value = 'ninguno'
     new_monto.value = props.departamento.expensa 
+    fecha_recibo.value = ''
+    mes_correspondiente.value=''
     error_recibo.value=''
     error_detalle.value=''
     error_total.value=''
