@@ -22,6 +22,9 @@
       <el-menu-item index="4">
         <nuxt-link to="/recibo/bloques" class="block w-full h-full">Recibos por bloques</nuxt-link>
       </el-menu-item>
+      <el-menu-item index="5">
+        <nuxt-link to="/recibo/mes_correspondiente" class="block w-full h-full">Recibos por mes</nuxt-link>
+      </el-menu-item>
     </el-menu>
   </div>
 </template>

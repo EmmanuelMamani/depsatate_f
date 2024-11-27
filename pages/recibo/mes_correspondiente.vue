@@ -91,14 +91,14 @@
     const fecha_reporte = new Date(fecha.value);
   
     try {
-      const response = await $fetch(`${config.public.apiBase}/recibos_mes`, {
+      const response = await $fetch(`${config.public.apiBase}/recibos_mes_correspondiente`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${userStore.token}`,
         },
         body: {
           fecha: `${fecha_reporte.getFullYear()}-${(fecha_reporte.getMonth() + 1).toString().padStart(2, '0')}`,
-          bloque: bloque.value,
+          bloque: bloque.value
         },
       });
       if (response) {
@@ -112,15 +112,14 @@
       });
     }
     try {
-      const response = await $fetch(`${config.public.apiBase}/recibo/reporte_detalles`, {
+      const response = await $fetch(`${config.public.apiBase}/recibo/reporte_detalles_mes_correspondiente`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${userStore.token}`,
         },
         body: {
-          inicio: new Date(fecha_reporte.getFullYear(), fecha_reporte.getMonth(), 1).toISOString().split('T')[0],
-          fin: new Date(fecha_reporte.getFullYear(), fecha_reporte.getMonth() + 1, 0).toISOString().split('T')[0],
-          bloque: bloque.value,
+            fecha: `${fecha_reporte.getFullYear()}-${(fecha_reporte.getMonth() + 1).toString().padStart(2, '0')}`,
+            bloque: bloque.value
         },
       });
       detalles.value = response;
