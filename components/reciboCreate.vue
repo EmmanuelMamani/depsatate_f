@@ -165,7 +165,7 @@
           detalles:detalles.value,
           nota:nota.value,
           fecha_recibo:fecha_recibo.value,
-          mes_correspondiente:`${fecha.getFullYear()}-${fecha.getMonth()+1}`
+          mes_correspondiente:`${fecha.getFullYear()}-${(fecha.getMonth()+1).toString().padStart(2, '0')}`
         },
       });
       if (response) {

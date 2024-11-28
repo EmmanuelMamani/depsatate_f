@@ -6,6 +6,7 @@
         <div class="flex justify-end space-x-3">
           <DepEstadoPDF v-if="bloque" :departamentos="departamentos" :bloque="bloque.bloque" estado="libre" tipo="success" ></DepEstadoPDF>
           <DepEstadoPDF v-if="bloque" :departamentos="departamentos" :bloque="bloque.bloque" estado="ocupado" tipo="danger" ></DepEstadoPDF>
+          <ReciboExcel v-if="bloque" :bloque="bloque.id" ></ReciboExcel>
         </div>
       </div>
         <el-empty description="Cargando Departamentos..." v-if="departamentos.length<=0" />
