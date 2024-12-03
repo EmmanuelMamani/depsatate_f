@@ -32,8 +32,6 @@
     </div>
 </template>
 <script setup>
-import ReciboCreate from '~/components/ReciboCreate.vue';
-
 
   const userStore = useUserStore();
   const config = useRuntimeConfig();

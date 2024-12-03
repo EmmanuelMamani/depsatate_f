@@ -1,6 +1,6 @@
 <template>
-    <div class="grid grid-cols-2 gap-3">
-      <div>
+    <div class="grid grid-cols-3 gap-3">
+      <div class="col-span-2">
         <div class="flex space-x-3 my-3">
           <label for="">Mes:</label>
           <el-date-picker v-model="fecha" type="month" placeholder="Elije un mes" />
@@ -11,11 +11,14 @@
           </el-select>
           
           <el-button type="primary" @click="reporte_mes">Aceptar</el-button>
-          <el-button type="info" v-if="departamentos.length>0" @click="pdfGenerate">PDF</el-button>
+
+          <ReciboPdfReport :recibos="filteredDepartamentos" ></ReciboPdfReport>
+          <ReciboExcelReport :recibos="filteredDepartamentos"></ReciboExcelReport>
         </div>
         <el-alert :title="error_reporte" v-if="error_reporte != ''" type="error" :closable="false" />
         <el-table :data="filteredDepartamentos" height="550" v-if="departamentos.length > 0" table-layout="auto">
           <el-table-column prop="departamento" label="Departamento" />
+          <el-table-column prop="estado_dep" label="Estado Dep." />
           <el-table-column label="Estado" prop="estado" filterable :filters="estadoFilters" :filter-method="filterEstado" column-key="estado">
             <template #default="{ row }">
               <el-tag :type="getTagType(row.estado)" effect="dark">{{ row.estado }}</el-tag>
@@ -29,7 +32,8 @@
         </el-table>
       </div>
       <div>
-        <h3 class="text-center block text-xl text-sky-900 mb-5">Detalles Recibo</h3>
+        <h3 class="text-center block text-xl text-sky-900">Detalles Recibo</h3>
+        <el-alert  class="my-5" title="Los detalles de estos recibos sirven para hacer presupuesto" type="info" :closable="false" />
         <div class="grid grid-cols-3 gap-3">
           <CardDetalle v-for="(detalle, index) in detalles" :key="index" :detalle="detalle.detalle" :monto="Number(detalle.monto)" :icon="detalle.icono"></CardDetalle>
         </div>
@@ -39,9 +43,6 @@
   
   <script setup>
 
-  import { jsPDF } from 'jspdf';
-  import 'jspdf-autotable';
-  
   const userStore = useUserStore();
   const config = useRuntimeConfig();
   const fecha = ref('');
@@ -139,33 +140,6 @@
       default:
         return '';
     }
-  }
-  
-  async function pdfGenerate() {
-    const doc = new jsPDF();
-    const bloque_rep = bloques.value.find(bloquer => bloquer.id === bloque.value);
-    const fecha_reporte = new Date(fecha.value);
-    const mes=`${fecha_reporte.getFullYear()}-${(fecha_reporte.getMonth() + 1).toString().padStart(2, '0')}`
-    // Agregar datos al PDF
-    doc.text(`Bloque ${bloque_rep.bloque} ${mes}`, 10, 10);
-  
-    // Formatear datos de la tabla filtrada para jsPDF-autotable
-    const rows = filteredDepartamentos.value.map(item => [
-      item.departamento,
-      item.estado,
-      item.recibo,
-      item.fecha_recibo,
-      item.mes_correspondiente,
-    ]);
-    const headers = [['Departamento', 'Estado', 'Recibo', 'Fecha', 'Mes correspondiente']];
-
-    doc.autoTable({
-      head: headers,
-      body: rows,
-      startY: 20, 
-    });
-  
-    doc.save(`reporte_${bloque_rep.bloque}_${mes}.pdf`);
   }
   
   onMounted(bloquesList);
