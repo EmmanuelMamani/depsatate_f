@@ -5,6 +5,7 @@
       <div class="grid grid-cols-2 gap-3">
         <el-input v-model="buscar"  style="width: 240px" placeholder="Buscar departamento" @input="filterDepartamentos"/>
         <div class="flex justify-end space-x-3">
+          <ChartBloque v-if="bloque" :bloque="Number(bloque.id)"></ChartBloque>
           <DepEstadoPDF v-if="bloque" :departamentos="departamentos" :bloque="bloque.bloque" estado="libre" tipo="success" ></DepEstadoPDF>
           <DepEstadoPDF v-if="bloque" :departamentos="departamentos" :bloque="bloque.bloque" estado="ocupado" tipo="danger" ></DepEstadoPDF>
           <ReciboExcel v-if="bloque" :bloque="bloque.id" ></ReciboExcel>

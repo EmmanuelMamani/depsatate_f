@@ -33,6 +33,9 @@
       </div>
       <div>
         <h3 class="text-center block text-xl text-sky-900">Detalles Recibo</h3>
+        <div class="flex justify-end p-2">
+          <ChartDetalle :detalles="detalles"></ChartDetalle>
+        </div>
         <el-alert  class="my-5" title="Los detalles de estos recibos sirven para hacer presupuesto" type="info" :closable="false" />
         <div class="grid grid-cols-3 gap-3">
           <CardDetalle v-for="(detalle, index) in detalles" :key="index" :detalle="detalle.detalle" :monto="Number(detalle.monto)" :icon="detalle.icono" :efectivo="Number(detalle.efectivo)" :tarjeta="Number(detalle.tarjeta)"></CardDetalle>
