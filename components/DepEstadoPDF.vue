@@ -21,11 +21,16 @@
         const textX = (pageWidth - textWidth) / 2;
         doc.text(text, textX, 10);
         
+        const totalSaldo = props.departamentos.reduce(
+            (total, item) => total + Number(item.saldo || 0), 0
+        );
+        doc.text(`Total Saldo: ${totalSaldo} Bs.`, 14, 15);
+
         const rows = props.departamentos
                     .filter(item => item.estado.toLowerCase() === `${props.estado}`) 
-                    .map(item => [item.departamento,item.estado]);
+                    .map(item => [item.departamento,item.mt2,item.expensa,item.saldo,item.estado]);
 
-        const headers = [['Departamento', 'Estado']];
+        const headers = [['Departamento','Mt2','Expensas','Saldo', 'Estado']];
 
         doc.autoTable({head: headers,body: rows,startY: 20,});
 

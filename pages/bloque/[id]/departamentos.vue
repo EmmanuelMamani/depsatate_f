@@ -1,6 +1,7 @@
 <template>
   <div>
     <h3 class="text-center text-slate-700 mb-3 text-xl">BLOQUE {{ bloque.bloque }} </h3>
+    <h4 class="text-start text-slate-700 mb-3 text-lg" >Saldo acumulado: {{ totalSaldo }}</h4>
       <div class="grid grid-cols-2 gap-3">
         <el-input v-model="buscar"  style="width: 240px" placeholder="Buscar departamento" @input="filterDepartamentos"/>
         <div class="flex justify-end space-x-3">
@@ -15,6 +16,7 @@
             <el-table-column prop="mt2" label="MT2"  />
             <el-table-column prop="expensa" label="Expensas" />
             <el-table-column prop="propietario" label="Propietario"  />
+            <el-table-column prop="saldo" label="Saldo acumulado"  />
             <el-table-column label="Estado" >
                 <template #default="scope">
                     <el-tag  :type="scope.row.estado=='libre'?'success':'danger'" >{{ scope.row.estado }}</el-tag>
@@ -40,6 +42,10 @@
   const departamentos = ref([])
   const bloque = ref('')
   const filteredDepartamentos = ref([]);
+
+  const totalSaldo = computed(() => {
+    return departamentos.value.reduce((total, depto) => total + Number(depto.saldo || 0), 0);
+  });
 
   async function departamentosList() {
     try {
